@@ -1,0 +1,48 @@
+# Git history
+.git
+.gitignore
+
+# Docker specific files
+Dockerfile
+.dockerignore
+run.sh
+
+# Python virtual environment
+.venv
+env/
+venv/
+ENV/
+__pypackages__/
+
+# IDE / Editor specific
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs and local databases
+*.log
+*.sqlite3
+fastapi.log
+worker.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test files and notebooks
+tests/
+notebooks/
+/test_*.py
+
+# Documentation
+README.md
+
+# Local environment files
+.env
+.env.*
+!.env.example 
