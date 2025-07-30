@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE实时进度测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .progress-display {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #1f77b4;
+            transition: width 0.3s ease;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .log {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 SSE实时进度测试</h1>
+        <p>测试项目管理助手的Server-Sent Events实时通信功能</p>
+        
+        <div class="input-group">
+            <label for="jobId">任务ID：</label>
+            <input type="text" id="jobId" placeholder="输入任务ID（或提交任务后自动填充）">
+        </div>
+        
+        <div class="input-group">
+            <label for="apiUrl">API地址：</label>
+            <input type="text" id="apiUrl" value="http://127.0.0.1:8000" placeholder="API基础地址">
+        </div>
+        
+        <button onclick="startSSE()" id="startBtn">开始监听进度</button>
+        <button onclick="stopSSE()" id="stopBtn" disabled>停止监听</button>
+        <button onclick="submitTestTask()" id="submitBtn">提交测试任务</button>
+        
+        <div id="progressContainer" class="progress-display" style="display: none;">
+            <div class="status">
+                <div id="statusText">等待连接...</div>
+                <div id="progressPercent">0%</div>
+            </div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="info-grid">
+                <div><strong>已执行时间:</strong> <span id="elapsedTime">0</span>秒</div>
+                <div><strong>预计剩余:</strong> <span id="remainingTime">未知</span>秒</div>
+                <div><strong>任务状态:</strong> <span id="taskStatus">未知</span></div>
+                <div><strong>连接时长:</strong> <span id="connectionTime">0</span>秒</div>
+            </div>
+            <div id="phaseInfo" style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-radius: 4px; border-left: 4px solid #2196f3; display: none;">
+                <div style="font-size: 13px; color: #1976d2;">
+                    <strong>当前阶段:</strong> <span id="phaseName">-</span>
+                </div>
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                    阶段进度: <span id="phaseProgress">0</span>%
+                </div>
+            </div>
+        </div>
+        
+        <div id="connectionStatus" style="margin-top: 10px; font-size: 12px; color: #666;">
+            未连接
+        </div>
+        
+        <div id="log" class="log"></div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        let connectionStartTime = null;
+        let connectionUpdateInterval = null;
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateConnectionTime() {
+            if (connectionStartTime) {
+                const elapsed = Math.floor((Date.now() - connectionStartTime) / 1000);
+                document.getElementById('connectionTime').textContent = elapsed;
+            }
+        }
+
+        function startSSE() {
+            const jobId = document.getElementById('jobId').value.trim();
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            
+            if (!jobId) {
+                alert('请输入任务ID');
+                return;
+            }
+            
+            if (eventSource) {
+                eventSource.close();
+            }
+            
+            const streamUrl = `${apiUrl}/v1/plans/${jobId}/stream`;
+            log(`开始连接SSE: ${streamUrl}`);
+            
+            eventSource = new EventSource(streamUrl);
+            connectionStartTime = Date.now();
+            
+            // 显示进度容器
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+            
+            // 开始更新连接时间
+            connectionUpdateInterval = setInterval(updateConnectionTime, 1000);
+            
+            eventSource.onopen = function(event) {
+                log('✅ SSE连接已建立');
+                document.getElementById('connectionStatus').innerHTML = '✅ 实时连接已建立';
+                document.getElementById('connectionStatus').style.color = '#28a745';
+            };
+            
+            eventSource.addEventListener('progress', function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    log(`进度更新: ${JSON.stringify(data)}`);
+                    updateDisplay(data);
+                } catch (e) {
+                    log(`❌ 解析进度数据失败: ${e.message}`);
+                }
+            });
+            
+            eventSource.addEventListener('complete', function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    log(`🎉 任务完成: ${JSON.stringify(data)}`);
+                    updateDisplay(data, true);
+                    
+                    document.getElementById('connectionStatus').innerHTML = '🎉 任务完成！';
+                    document.getElementById('connectionStatus').style.color = '#28a745';
+                    
+                    stopSSE();
+                } catch (e) {
+                    log(`❌ 解析完成数据失败: ${e.message}`);
+                }
+            });
+            
+            eventSource.addEventListener('error', function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    log(`❌ SSE错误: ${JSON.stringify(data)}`);
+                    
+                    document.getElementById('connectionStatus').innerHTML = '❌ 连接错误';
+                    document.getElementById('connectionStatus').style.color = '#dc3545';
+                    
+                    stopSSE();
+                } catch (e) {
+                    log(`❌ 解析错误数据失败: ${e.message}`);
+                }
+            });
+            
+            eventSource.onerror = function(event) {
+                log('⚠️ EventSource连接错误');
+                document.getElementById('connectionStatus').innerHTML = '⚠️ 连接不稳定';
+                document.getElementById('connectionStatus').style.color = '#ffc107';
+            };
+        }
+        
+        function stopSSE() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+                log('🔌 SSE连接已关闭');
+            }
+            
+            if (connectionUpdateInterval) {
+                clearInterval(connectionUpdateInterval);
+                connectionUpdateInterval = null;
+            }
+            
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+            document.getElementById('connectionStatus').innerHTML = '未连接';
+            document.getElementById('connectionStatus').style.color = '#666';
+        }
+        
+        function updateDisplay(data, isComplete = false) {
+            const progress = data.progress || 0;
+            const phase = data.phase || {};
+            
+            // 更新状态图标和颜色
+            let statusIcon = '🔄';
+            let statusColor = '#1f77b4';
+            
+            if (isComplete || data.status === 'finished') {
+                statusIcon = '🎉';
+                statusColor = '#28a745';
+            } else if (data.status === 'failed') {
+                statusIcon = '❌';
+                statusColor = '#dc3545';
+            }
+            
+            // 更新显示
+            document.getElementById('statusText').innerHTML = `${statusIcon} ${phase.name || '正在处理...'}`;
+            document.getElementById('statusText').style.color = statusColor;
+            document.getElementById('progressPercent').textContent = `${progress}%`;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressFill').style.backgroundColor = statusColor;
+            
+            // 更新时间信息
+            document.getElementById('elapsedTime').textContent = Math.floor(data.elapsed_time || 0);
+            document.getElementById('remainingTime').textContent = Math.floor(data.estimated_remaining || 0);
+            document.getElementById('taskStatus').textContent = data.status || '未知';
+            
+            // 更新阶段信息
+            if (phase.name) {
+                document.getElementById('phaseInfo').style.display = 'block';
+                document.getElementById('phaseName').textContent = phase.name;
+                document.getElementById('phaseProgress').textContent = phase.phase_progress || 0;
+            }
+        }
+        
+        function submitTestTask() {
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            
+            // 创建测试用的FormData
+            const formData = new FormData();
+            formData.append('project_description', `
+# 测试项目
+这是一个用于测试SSE功能的示例项目。
+
+## 功能需求
+1. 创建用户注册功能
+2. 实现登录系统
+3. 设计用户dashboard
+
+## 技术要求
+- 使用React前端
+- Node.js后端
+- MongoDB数据库
+            `.trim());
+            
+            // 创建测试CSV内容
+            const csvContent = `name,profile
+张三,"全栈工程师, 5年经验, 熟悉React和Node.js"
+李四,"UI设计师, 3年经验, 精通Figma"
+王五,"产品经理, 4年经验, 擅长需求分析"`;
+            
+            const csvBlob = new Blob([csvContent], { type: 'text/csv' });
+            formData.append('team_file', csvBlob, 'test_team.csv');
+            
+            log('🚀 提交测试任务...');
+            
+            fetch(`${apiUrl}/v1/plans`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                log(`✅ 任务提交成功: ${JSON.stringify(data)}`);
+                if (data.job_id) {
+                    document.getElementById('jobId').value = data.job_id;
+                    log(`💡 任务ID已自动填充: ${data.job_id}`);
+                }
+            })
+            .catch(error => {
+                log(`❌ 任务提交失败: ${error.message}`);
+            });
+        }
+        
+        // 页面卸载时关闭连接
+        window.addEventListener('beforeunload', function() {
+            stopSSE();
+        });
+        
+        // 初始化日志
+        log('页面已加载，准备测试SSE功能');
+    </script>
+</body>
+</html> 

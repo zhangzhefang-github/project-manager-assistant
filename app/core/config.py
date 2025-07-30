@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     # OpenAI Configuration
     OPENAI_API_KEY: str = "sk-..."
     OPENAI_API_BASE: str = "https://api.openai.com/v1"
+    OPENAI_MODEL: str = "gpt-4o-mini"  # 添加缺失的模型字段
     
     # Azure OpenAI Configuration
     AZURE_OPENAI_API_KEY: str = ""
@@ -19,4 +20,8 @@ class Settings(BaseSettings):
     REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379
 
-settings = Settings() 
+settings = Settings()
+
+def get_settings() -> Settings:
+    """获取配置实例"""
+    return settings 

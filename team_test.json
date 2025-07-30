@@ -1,0 +1,16 @@
+{
+  "team_members": [
+    {
+      "name": "Alice",
+      "profile_description": "Alice is a Frontend Developer skilled in HTML, CSS, JavaScript, and React."
+    },
+    {
+      "name": "Bob", 
+      "profile_description": "Bob is a Backend Developer proficient in Python, Django, SQL, and RESTful APIs."
+    },
+    {
+      "name": "Charlie",
+      "profile_description": "Charlie is a Project Manager experienced in Agile methodologies, team leadership, project planning, and risk management."
+    }
+  ]
+} 

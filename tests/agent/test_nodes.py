@@ -3,7 +3,14 @@ from unittest.mock import MagicMock
 import uuid
 
 from app.agent.nodes.extract_tasks import task_generation_node
-from app.schemas.task import Task, TaskList
+from app.agent.nodes.schedule_tasks import task_scheduler_node
+from app.agent.nodes.allocate_team import task_allocation_node
+from app.agent.nodes.assess_risk import risk_assessment_node
+from app.agent.nodes.generate_insights import insight_generation_node
+from app.schemas.task import Task, TaskSchedule, Dependency, Risk
+from app.schemas.plan import TaskList, Schedule, TaskAllocationList, RiskList
+from app.schemas.team import TeamMember, TaskAllocation
+import datetime
 
 @pytest.fixture
 def mock_llm():
@@ -32,8 +39,8 @@ def test_task_generation_node(mocker, mock_llm):
     and returns a state with the mocked tasks.
     """
     # Arrange
-    # Patch the global `llm` instance in the llm_service module
-    mocker.patch('app.services.llm_service.llm', mock_llm)
+    # Patch the `llm` object *where it is used*, inside the `extract_tasks` module.
+    mocker.patch('app.agent.nodes.extract_tasks.llm', mock_llm)
 
     initial_state = {
         "project_description": "Create a simple web application.",
@@ -55,3 +62,206 @@ def test_task_generation_node(mocker, mock_llm):
     assert isinstance(result_state["tasks"], TaskList)
     assert len(result_state["tasks"].tasks) == 1
     assert result_state["tasks"].tasks[0].task_name == "Mock Task" 
+
+
+@pytest.fixture
+def mock_schedule_llm():
+    """Fixture to create a mock LLM that returns a predictable Schedule."""
+    mock_scheduled_task = TaskSchedule(
+        task_id=uuid.uuid4(),
+        start_date="2024-01-01",
+        end_date="2024-01-05",
+        gantt_chart_format="Task 1: 2024-01-01, 5d"
+    )
+    mock_schedule = Schedule(schedule=[mock_scheduled_task])
+
+    mock_structured_llm = MagicMock()
+    mock_structured_llm.invoke.return_value = mock_schedule
+    
+    mock_llm_instance = MagicMock()
+    mock_llm_instance.with_structured_output.return_value = mock_structured_llm
+    
+    return mock_llm_instance
+
+
+def test_task_scheduler_node(mocker, mock_schedule_llm):
+    """
+    Tests the task_scheduler_node to ensure it processes input correctly
+    and returns a state with the mocked schedule.
+    """
+    # Arrange
+    mocker.patch('app.agent.nodes.schedule_tasks.llm', mock_schedule_llm)
+
+    task_id_1 = uuid.uuid4()
+    initial_state = {
+        "tasks": TaskList(tasks=[
+            Task(id=task_id_1, task_name="Task 1", task_description="First task", estimated_day=5)
+        ]),
+        "dependencies": [Dependency(source=task_id_1, target=task_id_1)],
+        "insights": [],
+        "schedule_iteration": [],
+    }
+
+    # Act
+    result_state = task_scheduler_node(initial_state)
+
+    # Assert
+    mock_schedule_llm.with_structured_output.assert_called_once_with(Schedule)
+    mock_schedule_llm.with_structured_output.return_value.invoke.assert_called_once()
+    
+    assert "schedule" in result_state
+    assert isinstance(result_state["schedule"], Schedule)
+    assert len(result_state["schedule"].schedule) == 1
+    assert result_state["schedule"].schedule[0].gantt_chart_format == "Task 1: 2024-01-01, 5d"
+    
+    assert "schedule_iteration" in result_state
+    assert len(result_state["schedule_iteration"]) == 1
+    assert result_state["schedule_iteration"][0] == result_state["schedule"] 
+
+
+@pytest.fixture
+def mock_allocation_llm():
+    """Fixture to create a mock LLM that returns a predictable TaskAllocationList."""
+    mock_task = Task(id=uuid.uuid4(), task_name="Allocated Task", task_description="A task to be allocated.", estimated_day=2)
+    mock_member = TeamMember(name="Test Developer", profile="Senior developer with 5 years of experience in Python.")
+    mock_allocation = TaskAllocation(task=mock_task, team_member=mock_member)
+    mock_allocation_list = TaskAllocationList(task_allocations=[mock_allocation])
+
+    mock_structured_llm = MagicMock()
+    mock_structured_llm.invoke.return_value = mock_allocation_list
+    
+    mock_llm_instance = MagicMock()
+    mock_llm_instance.with_structured_output.return_value = mock_structured_llm
+    
+    return mock_llm_instance
+
+
+def test_task_allocation_node(mocker, mock_allocation_llm):
+    """
+    Tests the task_allocation_node to ensure it processes input correctly
+    and returns a state with the mocked task allocations.
+    """
+    # Arrange
+    mocker.patch('app.agent.nodes.allocate_team.llm', mock_allocation_llm)
+
+    task_id = uuid.uuid4()
+    initial_state = {
+        "tasks": TaskList(tasks=[
+            Task(id=task_id, task_name="Allocated Task", task_description="A task to be allocated.", estimated_day=2)
+        ]),
+        "schedule": Schedule(schedule=[
+            TaskSchedule(task_id=task_id, start_date="2024-01-01", end_date="2024-01-02", gantt_chart_format="...")
+        ]),
+        "team": [TeamMember(name="Test Developer", profile="Senior developer with 5 years of experience in Python.")],
+        "insights": [],
+        "task_allocations_iteration": [],
+    }
+
+    # Act
+    result_state = task_allocation_node(initial_state)
+
+    # Assert
+    mock_allocation_llm.with_structured_output.assert_called_once_with(TaskAllocationList)
+    mock_allocation_llm.with_structured_output.return_value.invoke.assert_called_once()
+    
+    assert "task_allocations" in result_state
+    assert isinstance(result_state["task_allocations"], TaskAllocationList)
+    assert len(result_state["task_allocations"].task_allocations) == 1
+    assert result_state["task_allocations"].task_allocations[0].task.task_name == "Allocated Task"
+    assert result_state["task_allocations"].task_allocations[0].team_member.name == "Test Developer"
+    
+    assert "task_allocations_iteration" in result_state
+    assert len(result_state["task_allocations_iteration"]) == 1
+    assert result_state["task_allocations_iteration"][0] == result_state["task_allocations"] 
+
+
+@pytest.fixture
+def mock_risk_llm():
+    """Fixture to create a mock LLM that returns a predictable RiskList."""
+    mock_risks = [
+        Risk(risk_name="Dependency Risk", score="7"),
+        Risk(risk_name="Resource Risk", score="5")
+    ]
+    mock_risk_list = RiskList(risks=mock_risks)
+
+    mock_structured_llm = MagicMock()
+    mock_structured_llm.invoke.return_value = mock_risk_list
+    
+    mock_llm_instance = MagicMock()
+    mock_llm_instance.with_structured_output.return_value = mock_structured_llm
+    
+    return mock_llm_instance
+
+
+def test_risk_assessment_node(mocker, mock_risk_llm):
+    """
+    Tests the risk_assessment_node to ensure it processes state, calculates risk score,
+    and returns an updated state correctly.
+    """
+    # Arrange
+    mocker.patch('app.agent.nodes.assess_risk.llm', mock_risk_llm)
+
+    initial_state = {
+        "task_allocations": TaskAllocationList(task_allocations=[]), # Dummy data
+        "schedule": Schedule(schedule=[]), # Dummy data
+        "risks_iteration": [],
+        "iteration_number": 0,
+        "project_risk_score_iterations": [],
+    }
+
+    # Act
+    result_state = risk_assessment_node(initial_state)
+
+    # Assert
+    mock_risk_llm.with_structured_output.assert_called_once_with(RiskList)
+    mock_risk_llm.with_structured_output.return_value.invoke.assert_called_once()
+
+    assert "risks" in result_state
+    assert isinstance(result_state["risks"], RiskList)
+    assert len(result_state["risks"].risks) == 2
+
+    assert "iteration_number" in result_state
+    assert result_state["iteration_number"] == 1
+
+    assert "project_risk_score_iterations" in result_state
+    assert len(result_state["project_risk_score_iterations"]) == 1
+    assert result_state["project_risk_score_iterations"][0] == 12 # 7 + 5
+
+    assert "risks_iteration" in result_state
+    assert len(result_state["risks_iteration"]) == 1
+    assert result_state["risks_iteration"][0] == result_state["risks"] 
+
+
+@pytest.fixture
+def mock_insight_llm():
+    """Fixture to create a mock LLM that returns a predictable insight string."""
+    mock_response = MagicMock()
+    mock_response.content = "This is a mock insight."
+    
+    mock_llm_instance = MagicMock()
+    mock_llm_instance.invoke.return_value = mock_response
+    
+    return mock_llm_instance
+
+
+def test_insight_generation_node(mocker, mock_insight_llm):
+    """
+    Tests the insight_generation_node to ensure it processes state correctly
+    and returns a state with the mocked insight string.
+    """
+    # Arrange
+    mocker.patch('app.agent.nodes.generate_insights.llm', mock_insight_llm)
+
+    initial_state = {
+        "task_allocations": TaskAllocationList(task_allocations=[]), # Dummy
+        "schedule": Schedule(schedule=[]), # Dummy
+        "risks": RiskList(risks=[]), # Dummy
+    }
+
+    # Act
+    result_state = insight_generation_node(initial_state)
+
+    # Assert
+    mock_insight_llm.invoke.assert_called_once()
+    assert "insights" in result_state
+    assert result_state["insights"] == "This is a mock insight." 

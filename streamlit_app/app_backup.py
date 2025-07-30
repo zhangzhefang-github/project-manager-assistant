@@ -33,7 +33,7 @@ PAGE_TITLE = "AI 项目管理助手"
 PAGE_ICON = "🤖"
 
 # Base64 encoded image to avoid external network requests
-LANGCHAIN_ICON_B64 = "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"
+LANGCHAIN_ICON_B64 = "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"
 
 # 🎯 智能执行阶段映射 (基于时间推断)
 EXECUTION_PHASES = [
@@ -273,217 +273,170 @@ def create_sse_progress_component(job_id: str, api_url: str) -> str:
             return;
         }}
         
-        // 构建API URL - 改进连接逻辑
+        // 构建API URL - 修复iframe环境下hostname获取问题
         let apiUrl;
         
-        // 优先使用环境变量或配置的API地址
+        // 尝试从父窗口获取hostname（针对iframe环境）
         try {{
-            // 尝试从全局配置获取API URL
-            if (window.CONFIG && window.CONFIG.API_URL) {{
-                apiUrl = window.CONFIG.API_URL;
+            const parentHost = window.parent.location.hostname;
+            const currentHost = window.location.hostname || parentHost;
+            
+            console.log('Current hostname:', currentHost);
+            console.log('Parent hostname:', parentHost);
+            
+            if (currentHost && currentHost !== '' && currentHost !== 'localhost') {{
+                apiUrl = `http://${{currentHost}}:8000`;
+            }} else if (currentHost === 'localhost') {{
+                apiUrl = 'http://127.0.0.1:8000';
             }} else {{
-                // 回退到动态检测
-                const hostname = window.location.hostname;
-                console.log('Detected hostname:', hostname);
-                
-                if (hostname === 'localhost' || hostname === '127.0.0.1') {{
-                    apiUrl = 'http://127.0.0.1:8000';
-                }} else if (hostname && hostname !== '') {{
-                    apiUrl = `http://${{hostname}}:8000`;
-                }} else {{
-                    // 最终回退地址
-                    apiUrl = 'http://127.0.0.1:8000';
-                }}
+                // 直接使用已知的服务器地址
+                apiUrl = 'http://172.19.136.212:8000';
             }}
         }} catch (e) {{
-            console.log('Using fallback API URL');
-            apiUrl = 'http://127.0.0.1:8000';
+            console.log('Cannot access parent location, using fallback');
+            // iframe跨域限制时直接使用已知地址
+            apiUrl = 'http://172.19.136.212:8000';
         }}
         
         console.log('Final API URL:', apiUrl);
         
-        let eventSource;
-        const maxRetries = 3;
-        let retryCount = 0;
+        const eventSource = new EventSource(`${{apiUrl}}/v1/plans/{job_id}/stream`);
+        let startTime = Date.now();
         let hasReceivedData = false;
-        let connectionCheckInterval;
         
-        function createConnection() {{
-            try {{
-                eventSource = new EventSource(`${{apiUrl}}/v1/plans/{job_id}/stream`);
-                let startTime = Date.now();
-                
-                eventSource.onopen = function(event) {{
-                    console.log('SSE connection opened successfully');
-                    hasReceivedData = true;
-                    retryCount = 0;  // 重置重试计数
-                    connectionStatus.innerHTML = '✅ 实时连接已建立';
-                    connectionStatus.style.color = '#28a745';
-                    
-                    // 清除连接检查定时器
-                    if (connectionCheckInterval) {{
-                        clearInterval(connectionCheckInterval);
-                    }}
-                }};
-                
-                eventSource.addEventListener('progress', function(event) {{
-                    try {{
-                        const data = JSON.parse(event.data);
-                        console.log('Progress update received:', data);
-                        hasReceivedData = true;
-                        
-                        updateProgressDisplay(data);
-                        
-                        // 通知Streamlit状态更新
-                        if (window.parent && window.parent.postMessage) {{
-                            window.parent.postMessage({{
-                                type: 'sse_progress_update',
-                                data: data
-                            }}, '*');
-                        }}
-                        
-                    }} catch (e) {{
-                        console.error('Failed to parse progress data:', e, event.data);
-                    }}
-                }});
-                
-                eventSource.addEventListener('complete', function(event) {{
-                    try {{
-                        const data = JSON.parse(event.data);
-                        console.log('Task completed:', data);
-                        
-                        updateProgressDisplay(data, true);
-                        
-                        // 显示完成状态
-                        progressDisplay.innerHTML = `
-                            <div style="text-align: center; padding: 30px;">
-                                <div style="font-size: 24px; color: #28a745; margin-bottom: 15px;">
-                                    🎉 项目规划已完成！
-                                </div>
-                                <div style="font-size: 16px; color: #666; margin-bottom: 15px;">
-                                    任务ID: {job_id}
-                                </div>
-                                <button onclick="showTaskResult('{job_id}')" 
-                                        style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                                    📋 查看详细结果
-                                </button>
-                            </div>
-                        `;
-                        connectionStatus.innerHTML = '🎉 任务已完成！';
-                        connectionStatus.style.color = '#28a745';
-                        eventSource.close();
-                        
-                    }} catch (e) {{
-                        console.error('Failed to parse completion data:', e);
-                    }}
-                }});
-                
-                eventSource.addEventListener('error', function(event) {{
-                    try {{
-                        const data = JSON.parse(event.data);
-                        console.error('Task error received:', data);
-                        
-                        if (data.error === 'Job not found' && retryCount < maxRetries) {{
-                            // 任务可能还在队列中，稍后重试
-                            retryCount++;
-                            connectionStatus.innerHTML = `⏳ 任务启动中... (尝试 ${{retryCount}}/${{maxRetries}})`;
-                            connectionStatus.style.color = '#ffc107';
-                            
-                            setTimeout(() => {{
-                                eventSource.close();
-                                createConnection();
-                            }}, 2000 * retryCount);
-                            
-                        }} else {{
-                            // 显示错误信息
-                            progressDisplay.innerHTML = `
-                                <div style="text-align: center; padding: 20px; color: #dc3545;">
-                                    <div style="font-size: 18px; margin-bottom: 10px;">❌ 执行出错</div>
-                                    <div style="font-size: 14px;">${{data.error || '未知错误'}}</div>
-                                </div>
-                            `;
-                            connectionStatus.innerHTML = '❌ 执行失败';
-                            connectionStatus.style.color = '#dc3545';
-                            eventSource.close();
-                        }}
-                        
-                    }} catch (e) {{
-                        console.error('Failed to parse error data:', e);
-                    }}
-                }});
-                
-                eventSource.onerror = function(event) {{
-                    console.error('EventSource connection error:', event);
-                    
-                    if (retryCount < maxRetries && !hasReceivedData) {{
-                        retryCount++;
-                        connectionStatus.innerHTML = `⚠️ 连接中断，重新连接... (${{retryCount}}/${{maxRetries}})`;
-                        connectionStatus.style.color = '#ffc107';
-                        
-                        setTimeout(() => {{
-                            eventSource.close();
-                            createConnection();
-                        }}, 1000 * retryCount);
-                        
-                    }} else if (hasReceivedData) {{
-                        connectionStatus.innerHTML = '⚠️ 连接不稳定，但仍在处理...';
-                        connectionStatus.style.color = '#ffc107';
-                    }} else {{
-                        connectionStatus.innerHTML = '❌ 无法连接到服务器';
-                        connectionStatus.style.color = '#dc3545';
-                        eventSource.close();
-                    }}
-                }};
-                
-            }} catch (e) {{
-                console.error('Failed to create EventSource:', e);
-                connectionStatus.innerHTML = '❌ 连接创建失败';
-                connectionStatus.style.color = '#dc3545';
-            }}
-        }}
-        
-        // 启动连接
-        createConnection();
-        
-        // 设置连接监控 - 如果10秒内没有收到数据，检查任务状态
-        connectionCheckInterval = setInterval(() => {{
+        // 5秒后如果还没收到数据，显示更友好的提示
+        setTimeout(() => {{
             if (!hasReceivedData) {{
-                console.log('No data received, checking job status...');
-                fetch(`${{apiUrl}}/v1/plans/status/{job_id}`)
+                connectionStatus.innerHTML = '⚠️ 连接建立中，请稍候...';
+                connectionStatus.style.color = '#ffc107';
+                
+                // 如果是已完成的任务，直接显示完成状态
+                fetch(`${{apiUrl}}/v1/plans/{job_id}/status`)
                     .then(response => response.json())
                     .then(data => {{
-                        console.log('Job status check:', data);
-                        if (data.status === 'finished') {{
-                            // 任务已完成但SSE没收到，直接显示完成状态
+                        if (data.status === 'finished' || data.progress === 100) {{
                             progressDisplay.innerHTML = `
-                                <div style="text-align: center; padding: 30px;">
-                                    <div style="font-size: 24px; color: #28a745; margin-bottom: 15px;">
-                                        🎉 项目规划已完成！
-                                    </div>
-                                    <div style="font-size: 16px; color: #666; margin-bottom: 15px;">
-                                        任务ID: {job_id}
-                                    </div>
+                                <div style="text-align: center; padding: 25px; background: linear-gradient(135deg, #28a745, #20c997); border-radius: 10px; color: white;">
+                                    <div style="font-size: 24px; margin-bottom: 15px;">🎉 项目计划已生成完成！</div>
+                                    <div style="font-size: 16px; margin-bottom: 10px;">✅ 进度: 100%</div>
+                                    <div style="font-size: 14px; opacity: 0.9;">任务ID: {job_id}</div>
                                     <button onclick="showTaskResult('{job_id}')" 
-                                            style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                            style="margin-top: 15px; padding: 12px 24px; background: white; color: #28a745; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s ease;">
                                         📋 查看详细结果
                                     </button>
                                 </div>
                             `;
-                            connectionStatus.innerHTML = '🎉 任务已完成！';
+                            connectionStatus.innerHTML = '🎉 任务已完成！点击查看结果';
                             connectionStatus.style.color = '#28a745';
-                            if (eventSource) eventSource.close();
-                            clearInterval(connectionCheckInterval);
+                            connectionStatus.style.cursor = 'pointer';
+                            connectionStatus.onclick = () => showTaskResult('{job_id}');
+                            eventSource.close();
                         }}
                     }})
                     .catch(e => console.log('Status check failed:', e));
-            }} else {{
-                clearInterval(connectionCheckInterval);
             }}
-        }}, 10000);
-         
+        }}, 5000);
+        
+        eventSource.onopen = function(event) {{
+            console.log('SSE connection opened');
+            hasReceivedData = true;
+            connectionStatus.innerHTML = '✅ 实时连接已建立';
+            connectionStatus.style.color = '#28a745';
+        }};
+        
+        eventSource.addEventListener('progress', function(event) {{
+            try {{
+                const data = JSON.parse(event.data);
+                console.log('Progress update:', data);
+                hasReceivedData = true;
+                
+                updateProgressDisplay(data);
+                
+                // 通知Streamlit状态更新（如果需要）
+                if (window.parent && window.parent.postMessage) {{
+                    window.parent.postMessage({{
+                        type: 'sse_progress_update',
+                        data: data
+                    }}, '*');
+                }}
+                
+            }} catch (e) {{
+                console.error('Failed to parse SSE data:', e, event.data);
+            }}
+        }});
+        
+                        eventSource.addEventListener('complete', function(event) {{
+            try {{
+                const data = JSON.parse(event.data);
+                console.log('Task completed:', data);
+                
+                updateProgressDisplay(data, true);
+                connectionStatus.innerHTML = '🎉 任务完成！点击查看结果';
+                connectionStatus.style.color = '#28a745';
+                connectionStatus.style.cursor = 'pointer';
+                connectionStatus.onclick = () => showTaskResult('{job_id}');
+                
+                // 关闭连接
+                eventSource.close();
+                
+                // 立即显示完成状态 - 修复按钮逻辑
+                progressDisplay.innerHTML = `
+                    <div style="text-align: center; padding: 25px; background: linear-gradient(135deg, #28a745, #20c997); border-radius: 10px; color: white;">
+                        <div style="font-size: 24px; margin-bottom: 15px;">🎉 项目计划生成完成！</div>
+                        <div style="font-size: 16px; margin-bottom: 10px;">✅ 进度: 100%</div>
+                        <div style="font-size: 14px; opacity: 0.9;">任务ID: ${{data.job_id}}</div>
+                        <button onclick="showTaskResult('${{data.job_id}}')" 
+                                style="margin-top: 15px; padding: 12px 24px; background: white; color: #28a745; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                            📋 查看详细结果  
+                        </button>
+                    </div>
+                `;
+                
+                // 通知Streamlit任务完成
+                if (window.parent && window.parent.postMessage) {{
+                    window.parent.postMessage({{
+                        type: 'sse_task_complete',
+                        data: data
+                    }}, '*');
+                }}
+                
+                // 不自动刷新，让用户手动点击查看结果
+                
+            }} catch (e) {{
+                console.error('Failed to parse completion data:', e);
+            }}
+        }});
+        
+        eventSource.addEventListener('error', function(event) {{
+            try {{
+                const data = JSON.parse(event.data);
+                console.error('SSE error:', data);
+                
+                progressDisplay.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #dc3545;">
+                        <div style="font-size: 18px; margin-bottom: 10px;">❌ 连接错误</div>
+                        <div style="font-size: 14px;">${{data.error || '未知错误'}}</div>
+                    </div>
+                `;
+                
+                connectionStatus.innerHTML = '❌ 连接已断开';
+                connectionStatus.style.color = '#dc3545';
+                eventSource.close();
+                
+            }} catch (e) {{
+                console.error('Failed to parse error data:', e);
+            }}
+        }});
+        
+        eventSource.onerror = function(event) {{
+            console.error('EventSource failed:', event);
+            connectionStatus.innerHTML = '⚠️ 连接不稳定，尝试重连...';
+            connectionStatus.style.color = '#ffc107';
+        }};
+        
         function updateProgressDisplay(data, isComplete = false) {{
             const progress = data.progress || 0;
-            const isRealLangGraph = data.langgraph_flow || false;
+            const phase = data.phase || {{}};
             
             let statusIcon = '🔄';
             let statusColor = '#1f77b4';
@@ -496,147 +449,99 @@ def create_sse_progress_component(job_id: str, api_url: str) -> str:
                 statusColor = '#dc3545';
             }}
             
-            // 构建主显示内容
-            let mainContent = '';
+            const elapsedTime = data.elapsed_time || 0;
+            const estimatedRemaining = data.estimated_remaining || 0;
             
-            if (isRealLangGraph) {{
-                // === 真实的LangGraph流程显示 ===
-                const currentNodeDisplay = data.current_node_display || '处理中';
-                const nodeDetails = data.node_details || '正在执行...';
-                const completedNodes = data.completed_nodes || [];
-                const totalNodes = data.total_nodes || 6;
-                const iterationInfo = data.iteration_info || '';
-                
-                mainContent = `
-                    <div style="max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa;">
-                        
-                        <!-- 主状态显示 -->
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                            <div style="font-size: 18px; color: ${{statusColor}}; font-weight: bold;">
-                                ${{statusIcon}} ${{currentNodeDisplay}}
-                            </div>
-                            <div style="font-size: 16px; color: #666; font-weight: bold;">
-                                ${{progress}}%
-                            </div>
+            progressDisplay.innerHTML = `
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                        <div style="font-size: 18px; color: ${{statusColor}};">
+                            ${{statusIcon}} ${{phase.name || '正在处理...'}}
                         </div>
-                        
-                        <!-- 进度条 -->
-                        <div style="width: 100%; background-color: #e9ecef; border-radius: 4px; margin-bottom: 15px;">
-                            <div style="width: ${{progress}}%; height: 10px; background-color: ${{statusColor}}; border-radius: 4px; transition: width 0.3s ease;"></div>
-                        </div>
-                        
-                        <!-- 当前节点详细信息 -->
-                        <div style="background: #e3f2fd; padding: 12px; border-radius: 6px; border-left: 4px solid #2196f3; margin-bottom: 15px;">
-                            <div style="font-size: 14px; color: #1976d2; font-weight: bold; margin-bottom: 5px;">
-                                🤖 智能体执行状态
-                            </div>
-                            <div style="font-size: 13px; color: #333; margin-bottom: 3px;">
-                                <strong>当前节点:</strong> ${{data.current_node || 'unknown'}}
-                            </div>
-                            <div style="font-size: 12px; color: #666;">
-                                ${{nodeDetails}}
-                            </div>
-                            ${{iterationInfo ? `<div style="font-size: 12px; color: #ff6b35; margin-top: 5px;"><strong>${{iterationInfo}}</strong></div>` : ''}}
-                        </div>
-                        
-                        <!-- 智能体工作流程 -->
-                        <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd;">
-                            <div style="font-size: 13px; font-weight: bold; margin-bottom: 10px; color: #333;">
-                                📊 智能体工作流程 (${{completedNodes.length}}/${{totalNodes}} 已完成)
-                            </div>
-                            <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; font-size: 9px;">
-                                ${{generateNodeGrid(data.current_node, completedNodes)}}
-                            </div>
-                        </div>
-                        
-                        <!-- 统计信息 -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 12px; color: #666; margin-top: 15px;">
-                            <div>
-                                <strong>执行时间:</strong> ${{data.total_elapsed_time || 0}}秒
-                            </div>
-                            <div>
-                                <strong>任务ID:</strong> ${{data.job_id ? data.job_id.substring(0, 8) : 'N/A'}}
-                            </div>
+                        <div style="font-size: 14px; color: #666;">
+                            ${{progress}}%
                         </div>
                     </div>
-                `;
-            }} else {{
-                // === 回退到简单显示 ===
-                mainContent = `
-                    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                            <div style="font-size: 18px; color: ${{statusColor}};">
-                                ${{statusIcon}} ${{data.current_node_display || '正在处理...'}}
-                            </div>
-                            <div style="font-size: 14px; color: #666;">
-                                ${{progress}}%
-                            </div>
+                    
+                    <div style="width: 100%; background-color: #e9ecef; border-radius: 4px; margin-bottom: 15px;">
+                        <div style="width: ${{progress}}%; height: 8px; background-color: ${{statusColor}}; border-radius: 4px; transition: width 0.3s ease;"></div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 12px; color: #666;">
+                        <div>
+                            <strong>已执行时间:</strong> ${{Math.floor(elapsedTime)}}秒
                         </div>
-                        
-                        <div style="width: 100%; background-color: #e9ecef; border-radius: 4px; margin-bottom: 15px;">
-                            <div style="width: ${{progress}}%; height: 8px; background-color: ${{statusColor}}; border-radius: 4px; transition: width 0.3s ease;"></div>
+                        <div>
+                            <strong>预计剩余:</strong> ${{Math.floor(estimatedRemaining)}}秒
                         </div>
-                        
-                        <div style="font-size: 12px; color: #666; text-align: center;">
-                            ${{data.node_details || '正在处理中，请稍候...'}}
+                        <div>
+                            <strong>任务状态:</strong> ${{data.status}}
+                        </div>
+                        <div>
+                            <strong>连接时长:</strong> ${{Math.floor((Date.now() - startTime) / 1000)}}秒
                         </div>
                     </div>
-                `;
-            }}
-            
-            progressDisplay.innerHTML = mainContent;
+                    
+                    ${{phase.name ? `
+                        <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-radius: 4px; border-left: 4px solid #2196f3;">
+                            <div style="font-size: 13px; color: #1976d2;">
+                                <strong>当前阶段:</strong> ${{phase.name}}
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                阶段进度: ${{phase.phase_progress || 0}}%
+                            </div>
+                        </div>
+                    ` : ''}}
+                </div>
+            `;
         }}
         
-        // 生成智能体节点网格显示
-        function generateNodeGrid(currentNode, completedNodes) {{
-            const langGraphNodes = [
-                {{name: 'task_generation', display: '🧠 任务提取'}},
-                {{name: 'analyze_dependencies', display: '🔗 依赖分析'}},
-                {{name: 'schedule_tasks', display: '📅 智能调度'}},
-                {{name: 'allocate_team', display: '👥 团队匹配'}},
-                {{name: 'assess_risk', display: '⚠️ 风险评估'}},
-                {{name: 'generate_insights', display: '✨ 方案优化'}}
-            ];
-            
-            return langGraphNodes.map(node => {{
-                let style = '';
-                let icon = '';
-                
-                if (completedNodes.includes(node.name)) {{
-                    // 已完成
-                    style = 'background: #d4edda; color: #155724; border: 2px solid #28a745;';
-                    icon = '✅';
-                }} else if (node.name === currentNode) {{
-                    // 当前执行
-                    style = 'background: #cce7ff; color: #004085; border: 2px solid #007bff; box-shadow: 0 0 8px rgba(0,123,255,0.4);';
-                    icon = '⚡';
-                }} else {{
-                    // 待执行
-                    style = 'background: #f8f9fa; color: #6c757d; border: 1px solid #dee2e6;';
-                    icon = '⏳';
-                }}
-                
-                return `
-                    <div style="text-align: center; padding: 6px 2px; border-radius: 4px; ${{style}}">
-                        <div style="font-size: 12px; margin-bottom: 1px;">${{icon}}</div>
-                        <div style="font-size: 8px; font-weight: bold; line-height: 1.1;">${{node.display}}</div>
-                    </div>
-                `;
-            }}).join('');
-        }}
-        
-        // 添加查看结果的函数
+        // 添加查看结果的JavaScript函数
         window.showTaskResult = function(jobId) {{
             console.log('Showing task result for job:', jobId);
             
-            // 通知父窗口显示结果
-            if (window.parent && window.parent.postMessage) {{
-                window.parent.postMessage({{
-                    type: 'show_task_result',
-                    job_id: jobId
-                }}, '*');
-            }}
+            // 直接触发手动检查结果的逻辑
+            fetch(`${{apiUrl}}/v1/plans/${{jobId}}`)
+                .then(response => response.json())
+                .then(data => {{
+                    if (data.status === 'finished' && data.result) {{
+                        // 通过postMessage通知Streamlit设置结果
+                        if (window.parent && window.parent.postMessage) {{
+                            window.parent.postMessage({{
+                                type: 'set_task_result',
+                                job_id: jobId,
+                                result: data.result
+                            }}, '*');
+                        }}
+                        
+                        // 触发页面刷新以显示结果
+                        setTimeout(() => {{
+                            window.parent.location.reload();
+                        }}, 500);
+                    }}
+                }})
+                .catch(e => {{
+                    console.error('Failed to fetch task result:', e);
+                    // 如果API调用失败，仍然尝试刷新页面
+                    window.parent.location.reload();
+                }});
         }};
+        
+        // 监听来自父窗口的消息
+        window.addEventListener('message', function(event) {{
+            console.log('Received message:', event.data);
+            if (event.data.type === 'set_task_result') {{
+                // 在localStorage中存储结果数据，以便页面刷新后使用
+                localStorage.setItem('task_result_' + event.data.job_id, JSON.stringify(event.data.result));
+                localStorage.setItem('task_completed', 'true');
+                localStorage.setItem('current_job_id', event.data.job_id);
+            }}
+        }});
+        
+        // 清理函数，当组件卸载时关闭连接
+        window.addEventListener('beforeunload', function() {{
+            eventSource.close();
+        }});
         
     }})();
     </script>
@@ -768,53 +673,46 @@ if 'job_id' in st.session_state and st.session_state.job_id and st.session_state
     # 添加手动刷新按钮 - 优化样式
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
+        # 创建美观的手动检查按钮
+        st.markdown("""
+        <style>
+        .custom-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .custom-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
         if st.button("🔄 手动检查结果", key="manual_refresh", type="primary"):
             try:
-                # 首先获取任务状态
-                status_response = requests.get(f"{API_URL}/v1/plans/status/{job_id}")
-                status_response.raise_for_status()
-                status_data = status_response.json()
+                response = requests.get(f"{API_URL}/v1/plans/{job_id}")
+                response.raise_for_status()
+                result_data = response.json()
                 
-                task_status = status_data.get('status', '未知')
-                
-                if task_status == "finished":
-                    # 任务完成，获取详细结果
-                    try:
-                        result_response = requests.get(f"{API_URL}/v1/plans/{job_id}")
-                        result_response.raise_for_status()
-                        result_data = result_response.json()
-                        
-                        st.session_state.task_completed = True
-                        st.session_state.task_result = result_data
-                        st.session_state.job_id = job_id
-                        st.success("🎉 任务已完成！正在加载结果...")
-                        st.rerun()
-                        
-                    except requests.exceptions.RequestException as result_e:
-                        st.error(f"❌ 获取任务结果失败: {result_e}")
-                        
-                elif task_status == "failed":
+                if result_data.get("status") == "finished":
+                    st.session_state.task_completed = True
+                    st.session_state.task_result = result_data.get("result")
+                    st.session_state.job_id = job_id  # 确保job_id保持
+                    st.rerun()
+                elif result_data.get("status") == "failed":
                     st.error("❌ 任务执行失败，请重试")
                     st.session_state.task_submitted = False
-                    
-                elif task_status == "started":
-                    progress = status_data.get('progress', 0)
-                    elapsed_time = status_data.get('elapsed_time', 0)
-                    st.info(f"📊 任务正在执行中... 进度: {progress}% | 已执行: {elapsed_time}秒")
-                    
-                elif task_status == "queued":
-                    position = status_data.get('position', 0)
-                    if position > 0:
-                        st.info(f"⏳ 任务正在队列中等待，排队位置: {position}")
-                    else:
-                        st.info("⏳ 任务已在队列中，即将开始执行")
-                        
                 else:
-                    st.info(f"📋 任务状态: {task_status}")
+                    st.info(f"📋 任务状态: {result_data.get('status', '未知')}")
                     
             except requests.exceptions.RequestException as e:
                 st.error(f"❌ 获取任务状态失败: {e}")
-                st.info("💡 提示：请确保后端服务正在运行，或稍后重试")
 
 # 如果任务完成，显示结果
 if st.session_state.get('task_completed', False) and st.session_state.get('task_result'):
