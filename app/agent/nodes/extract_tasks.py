@@ -66,8 +66,15 @@ def task_generation_node(state: AgentState) -> dict:
             except ImportError:
                 pass
         
-        # 使用中文化的prompt模板
-        chinese_prompt = get_prompt("task_generation", description=state["project_description"])
+        # 从 state 中获取团队信息，如果不存在则提供默认值
+        team_info = state.get("team", "未提供团队信息")
+        
+        # 使用中文化的prompt模板，并传入团队信息
+        chinese_prompt = get_prompt(
+            "task_generation", 
+            description=state["project_description"],
+            team=str(team_info) # 确保team信息是字符串格式
+        )
         
         # 构建结构化输出的prompt - 修复ChatPromptTemplate变量问题
         full_prompt = f"""{chinese_prompt}

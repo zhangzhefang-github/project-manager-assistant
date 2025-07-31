@@ -199,7 +199,7 @@ async def create_plan(
             "task_allocations": None,
             "risks": None,
             "iteration_number": 0,
-            "max_iteration": 3,
+            "max_iteration": 1,
             "insights": "",
             "schedule_iteration": [],
             "task_allocations_iteration": [],
